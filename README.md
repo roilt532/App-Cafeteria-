@@ -5,14 +5,6 @@ Pide tu comida desde el móvil y recógela sin colas.
 
 ---
 
-## Acceso rápido
-
-**URL de la app:** [https://5a51f588-5b80-4e9a-b073-187bf28fd15a.preview.emergentagent.com](https://5a51f588-5b80-4e9a-b073-187bf28fd15a.preview.emergentagent.com)
-
-> Es un prototipo navegable. Login y registro funcionan con cualquier email/contraseña.
-
----
-
 ## Qué es PíoBite
 
 PíoBite es una plataforma digital de pre-pedidos para la cafetería del instituto.  
