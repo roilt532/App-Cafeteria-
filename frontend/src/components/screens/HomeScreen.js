@@ -15,7 +15,7 @@ function ProductCard({ product, onAdd, onFav, isFav, lang }) {
             <Leaf size={12} /> Saludable
           </span>
         )}
-        <button onClick={() => onFav(product.id)} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md transition-all duration-300 hover:scale-110 active:scale-90" data-testid={`fav-btn-${product.id}`}>
+        <button onClick={(e) => { e.stopPropagation(); onFav(product.id); }} className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md transition-all duration-300 hover:scale-110 active:scale-90 z-10" data-testid={`fav-btn-${product.id}`}>
           <Heart size={16} className={isFav ? 'fill-red-500 text-red-500' : 'text-piobite-muted'} />
         </button>
       </div>
@@ -23,7 +23,7 @@ function ProductCard({ product, onAdd, onFav, isFav, lang }) {
         <h3 className="font-heading font-bold text-sm text-piobite-text leading-tight truncate">{displayName}</h3>
         <div className="flex items-center justify-between mt-3">
           <span className="font-heading font-black text-lg text-piobite-primary">{product.price.toFixed(2)}€</span>
-          <button onClick={() => onAdd(product)} className="w-10 h-10 bg-piobite-primary rounded-full flex items-center justify-center text-white shadow-md hover:bg-piobite-primary-hover transition-all duration-300 hover:scale-110 active:scale-90" data-testid={`add-to-cart-${product.id}`}>
+          <button onClick={(e) => { e.stopPropagation(); onAdd(product); }} className="w-10 h-10 bg-piobite-primary rounded-full flex items-center justify-center text-white shadow-md hover:bg-piobite-primary-hover transition-all duration-300 hover:scale-110 active:scale-90 relative z-10" data-testid={`add-to-cart-${product.id}`}>
             <Plus size={18} strokeWidth={3} />
           </button>
         </div>

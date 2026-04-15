@@ -15,7 +15,7 @@ export default function ProfileScreen() {
   };
 
   const menuItems = [
-    { icon: Globe, label: t('profile.language'), value: lang === 'es' ? t('profile.spanish') : t('profile.english'), action: toggleLang, testId: 'profile-language-toggle' },
+    { icon: Globe, label: t('profile.language'), value: lang === 'es' ? '🇪🇸 Español → English' : '🇬🇧 English → Español', action: toggleLang, testId: 'profile-language-toggle' },
     { icon: Bell, label: t('profile.notifications'), action: () => {}, testId: 'profile-notifications' },
     { icon: HelpCircle, label: t('profile.help'), action: () => {}, testId: 'profile-help' },
     { icon: FileText, label: t('profile.terms'), action: () => {}, testId: 'profile-terms' },
