@@ -3,1082 +3,635 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diseño API REST - Cafetería PíoBite - Instituto Pío Baroja</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Diseño API REST - Cafetería del Instituto</title>
     <style>
-        @page { margin: 2cm; size: A4; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            color: #1a1a2e;
+            font-family: Arial, sans-serif;
+            color: #333;
             background: white;
             font-size: 13px;
-            line-height: 1.7;
+            line-height: 1.8;
             padding: 40px;
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
         }
-
-        /* PORTADA */
-        .cover {
-            text-align: center;
-            padding: 80px 20px 60px;
-            page-break-after: always;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .cover-badge {
-            display: inline-block;
-            background: #00A86B;
-            color: white;
-            padding: 6px 20px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-        }
-        .cover h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: #1a1a2e;
-            line-height: 1.2;
-            margin-bottom: 12px;
-        }
-        .cover h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #6b7280;
-            margin-bottom: 40px;
-        }
-        .cover-meta {
-            font-size: 13px;
-            color: #9ca3af;
-            line-height: 2;
-        }
-        .cover-meta strong { color: #1a1a2e; }
-        .cover-line {
-            width: 60px;
-            height: 4px;
-            background: #00A86B;
-            margin: 24px auto;
-            border-radius: 2px;
-        }
-
-        /* TITULOS */
-        h2 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1a1a2e;
-            margin: 40px 0 8px;
-            padding-bottom: 8px;
-            border-bottom: 3px solid #00A86B;
-        }
-        h3 {
-            font-size: 17px;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin: 28px 0 10px;
-        }
-        h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #374151;
-            margin: 20px 0 8px;
-        }
-        p { margin-bottom: 10px; color: #374151; }
-
-        /* TABLAS */
+        h1 { font-size: 22px; text-align: center; margin-bottom: 4px; }
+        h2 { font-size: 18px; margin-top: 35px; border-bottom: 2px solid #333; padding-bottom: 4px; }
+        h3 { font-size: 15px; margin-top: 25px; }
+        h4 { font-size: 13px; margin-top: 18px; font-style: italic; }
+        p { margin-bottom: 10px; }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 16px 0 24px;
+            margin: 12px 0 20px;
             font-size: 12px;
         }
-        th {
-            background: #f0fdf4;
-            color: #1a1a2e;
-            font-weight: 700;
+        th, td {
+            border: 1px solid #999;
+            padding: 6px 10px;
             text-align: left;
-            padding: 10px 12px;
-            border: 1px solid #d1d5db;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        td {
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
             vertical-align: top;
         }
-        tr:nth-child(even) { background: #fafafa; }
-
-        /* METODO HTTP */
-        .method {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 11px;
-            color: white;
-        }
-        .get { background: #3b82f6; }
-        .post { background: #22c55e; }
-        .put { background: #f59e0b; }
-        .patch { background: #f97316; }
-        .delete { background: #ef4444; }
-
-        /* CODIGO */
+        th { background: #eee; font-weight: bold; }
         code {
-            background: #f1f5f9;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 1px 4px;
+            font-family: Consolas, monospace;
             font-size: 12px;
-            color: #1e40af;
         }
         pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 11.5px;
-            line-height: 1.6;
-            margin: 12px 0 20px;
-        }
-        pre .key { color: #7dd3fc; }
-        pre .str { color: #86efac; }
-        pre .num { color: #fbbf24; }
-        pre .comment { color: #64748b; }
-
-        /* FLUJOS */
-        .flow {
-            margin: 16px 0 24px;
-            padding: 0;
-        }
-        .flow-step {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 4px;
-            position: relative;
-        }
-        .flow-num {
-            width: 32px;
-            height: 32px;
-            background: #00A86B;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 13px;
-            flex-shrink: 0;
-            z-index: 1;
-        }
-        .flow-content {
-            flex: 1;
-            padding-bottom: 20px;
-            border-left: 2px solid #d1fae5;
-            padding-left: 20px;
-            margin-left: -17px;
-        }
-        .flow-step:last-child .flow-content { border-left-color: transparent; }
-        .flow-label {
-            font-weight: 700;
-            font-size: 13px;
-            color: #1a1a2e;
-            margin-bottom: 4px;
-        }
-        .flow-detail {
-            font-size: 12px;
-            color: #6b7280;
-        }
-        .flow-arrow {
-            display: inline-block;
-            background: #e0e7ff;
-            color: #4338ca;
-            padding: 1px 8px;
-            border-radius: 4px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-family: Consolas, monospace;
             font-size: 11px;
-            font-weight: 600;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin: 8px 0 16px;
         }
-
-        /* NOTAS */
-        .note {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-            padding: 12px 16px;
-            border-radius: 0 8px 8px 0;
-            margin: 16px 0;
-            font-size: 12px;
-        }
-        .note-info {
-            background: #eff6ff;
-            border-left-color: #3b82f6;
-        }
-        .note-green {
-            background: #f0fdf4;
-            border-left-color: #00A86B;
-        }
-
-        /* AUTH BADGES */
-        .auth-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: 700;
-        }
-        .auth-none { background: #f1f5f9; color: #64748b; }
-        .auth-client { background: #dbeafe; color: #1d4ed8; }
-        .auth-owner { background: #fef3c7; color: #b45309; }
-        .auth-any { background: #d1fae5; color: #047857; }
-
-        /* INDICE */
-        .toc {
+        .portada {
+            text-align: center;
+            padding: 120px 0 80px;
             page-break-after: always;
         }
-        .toc ul {
-            list-style: none;
-            padding: 0;
+        .portada h1 { font-size: 26px; margin-bottom: 10px; }
+        .portada p { color: #555; }
+        .nota {
+            background: #ffffdd;
+            border: 1px solid #eedd88;
+            padding: 8px 12px;
+            margin: 12px 0;
+            font-size: 12px;
         }
-        .toc li {
-            padding: 6px 0;
-            border-bottom: 1px dotted #d1d5db;
-            display: flex;
-            justify-content: space-between;
-        }
-        .toc li strong { color: #00A86B; margin-right: 8px; }
-
+        ol, ul { margin: 8px 0 16px 20px; }
+        li { margin-bottom: 4px; }
         .page-break { page-break-before: always; }
-
-        .status-table td:first-child { font-weight: 700; }
+        .centro { text-align: center; }
     </style>
 </head>
 <body>
 
     <!-- PORTADA -->
-    <div class="cover">
-        <span class="cover-badge">Documento Técnico</span>
-        <h1>Diseño de la API REST<br>Cafetería del Instituto</h1>
-        <h2>Interfaz de comunicación entre Frontend (React) y Backend (Django REST Framework)</h2>
-        <div class="cover-line"></div>
-        <div class="cover-meta">
-            <strong>Proyecto:</strong> PíoBite — Cafetería Instituto Pío Baroja<br>
-            <strong>Asignatura:</strong> Desarrollo de Aplicaciones Web<br>
-            <strong>Fecha:</strong> Abril 2025<br>
-        </div>
+    <div class="portada">
+        <h1>Diseño de la API REST para la<br>Cafetería del Instituto</h1>
+        <p><em>Ejercicio de diseño de la interfaz de comunicación entre frontend y backend</em></p>
+        <br><br>
+        <p><strong>Proyecto:</strong> Cafetería Instituto Pío Baroja</p>
+        <p><strong>Asignatura:</strong> Desarrollo de Aplicaciones Web</p>
+        <p><strong>Fecha:</strong> Abril 2025</p>
     </div>
 
     <!-- INDICE -->
-    <div class="toc">
-        <h2 style="margin-top:0;">Índice de Contenidos</h2>
-        <ul>
-            <li><strong>1.</strong> Introducción y Convenciones Generales</li>
-            <li><strong>2.</strong> Listado de Endpoints</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.1. Autenticación (Google SSO)</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.2. Productos</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.3. Carrito</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.4. Pedidos</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.5. Pagos (Redsys)</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.6. Inventario (Panel Dueño)</li>
-            <li>&nbsp;&nbsp;&nbsp;&nbsp;2.7. Estadísticas (Panel Dueño)</li>
-            <li><strong>3.</strong> Flujo de Autenticación con Google SSO</li>
-            <li><strong>4.</strong> Flujo de un Pedido Completo</li>
-            <li><strong>5.</strong> Gestión de Errores</li>
-        </ul>
-    </div>
+    <h2>Índice</h2>
+    <ol>
+        <li>Introducción</li>
+        <li>Listado de endpoints
+            <ol type="a">
+                <li>Autenticación (Google SSO)</li>
+                <li>Productos</li>
+                <li>Pedidos</li>
+                <li>Pagos (Redsys)</li>
+                <li>Inventario</li>
+                <li>Estadísticas</li>
+            </ol>
+        </li>
+        <li>Flujo de autenticación</li>
+        <li>Flujo de un pedido completo</li>
+        <li>Gestión de errores</li>
+    </ol>
 
     <!-- 1. INTRODUCCION -->
-    <h2>1. Introducción y Convenciones Generales</h2>
+    <h2 class="page-break">1. Introducción</h2>
 
-    <p>Este documento define la API REST que actúa como interfaz de comunicación entre el frontend (React) y el backend (Django REST Framework) de la aplicación de cafetería del Instituto Pío Baroja.</p>
+    <p>En este documento se define la API REST que servirá como interfaz entre el frontend hecho en React y el backend con Django REST Framework. La idea es que los dos equipos puedan trabajar a la vez sabiendo exactamente qué datos se envían y se reciben en cada petición.</p>
 
-    <h4>URL base</h4>
-    <pre><code>https://api.piobite.es/api/v1/</code></pre>
+    <p>Algunas cosas generales que aplican a toda la API:</p>
 
-    <h4>Formato de datos</h4>
-    <p>Todas las peticiones y respuestas utilizan <code>Content-Type: application/json</code>.</p>
+    <ul>
+        <li><strong>URL base:</strong> <code>https://api.piobite.es/api/v1/</code></li>
+        <li><strong>Formato:</strong> Todas las peticiones y respuestas van en JSON (<code>Content-Type: application/json</code>).</li>
+        <li><strong>Autenticación:</strong> Se usan tokens JWT. El token se manda en cada petición con la cabecera: <code>Authorization: Bearer &lt;token&gt;</code></li>
+    </ul>
 
-    <h4>Autenticación</h4>
-    <p>La autenticación se realiza mediante tokens JWT (JSON Web Token). El token se envía en la cabecera de cada petición autenticada:</p>
-    <pre>Authorization: Bearer &lt;access_token&gt;</pre>
-
-    <h4>Roles de usuario</h4>
+    <p>Hay dos roles de usuario:</p>
     <table>
-        <tr><th>Rol</th><th>Descripción</th><th>Permisos</th></tr>
-        <tr><td><span class="auth-client">cliente</span></td><td>Alumno o personal del instituto</td><td>Ver catálogo, hacer pedidos, ver historial propio</td></tr>
-        <tr><td><span class="auth-owner">dueño/staff</span></td><td>Propietario o empleado de la cafetería</td><td>Todo lo anterior + gestión de inventario, pedidos y estadísticas</td></tr>
+        <tr><th>Rol</th><th>Quién es</th><th>Qué puede hacer</th></tr>
+        <tr><td>Cliente</td><td>Alumnos y personal del instituto</td><td>Ver productos, hacer pedidos, ver su historial</td></tr>
+        <tr><td>Dueño / Staff</td><td>Personal de la cafetería</td><td>Todo lo anterior + gestionar inventario, pedidos y ver estadísticas</td></tr>
     </table>
 
-    <h4>Paginación</h4>
-    <p>Los listados que devuelven múltiples recursos utilizan paginación por cursor:</p>
+    <p>Las respuestas que devuelven listas usan paginación con este formato:</p>
     <pre>{
-  <span class="key">"count"</span>: <span class="num">48</span>,
-  <span class="key">"next"</span>: <span class="str">"https://api.piobite.es/api/v1/productos/?page=2"</span>,
-  <span class="key">"previous"</span>: <span class="str">null</span>,
-  <span class="key">"results"</span>: [ ... ]
+    "count": 48,
+    "next": "https://api.piobite.es/api/v1/productos/?page=2",
+    "previous": null,
+    "results": [ ... ]
 }</pre>
+
 
     <!-- 2. ENDPOINTS -->
     <h2 class="page-break">2. Listado de Endpoints</h2>
 
-    <!-- 2.1 AUTH -->
-    <h3>2.1. Autenticación (Google SSO)</h3>
+    <!-- 2a AUTH -->
+    <h3>2a. Autenticación (Google SSO)</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/auth/google/</code></td>
-            <td>Intercambia el código de autorización de Google por tokens JWT de la aplicación.</td>
-            <td><span class="auth-none">Ninguna</span></td>
-            <td><strong>Body:</strong> <code>{ "code": "string" }</code></td>
+            <td>Envía el código de Google y recibe los tokens JWT de nuestra app</td>
+            <td>No</td>
+            <td>Body: <code>{ "code": "..." }</code></td>
         </tr>
         <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/auth/refresh/</code></td>
-            <td>Renueva el access token usando el refresh token.</td>
-            <td><span class="auth-none">Ninguna</span></td>
-            <td><strong>Body:</strong> <code>{ "refresh": "string" }</code></td>
+            <td>Renueva el access token cuando caduca</td>
+            <td>No</td>
+            <td>Body: <code>{ "refresh": "..." }</code></td>
         </tr>
         <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/auth/logout/</code></td>
-            <td>Invalida el refresh token actual.</td>
-            <td><span class="auth-any">Cualquier rol</span></td>
-            <td><strong>Body:</strong> <code>{ "refresh": "string" }</code></td>
+            <td>Cierra sesión invalidando el refresh token</td>
+            <td>Sí (cualquier rol)</td>
+            <td>Body: <code>{ "refresh": "..." }</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/auth/me/</code></td>
-            <td>Devuelve los datos del usuario autenticado.</td>
-            <td><span class="auth-any">Cualquier rol</span></td>
+            <td>Devuelve los datos del usuario que ha iniciado sesión</td>
+            <td>Sí (cualquier rol)</td>
             <td>—</td>
         </tr>
     </table>
 
-    <h4>Ejemplo de respuesta — <code>POST /auth/google/</code></h4>
+    <h4>Ejemplo de respuesta de POST /auth/google/</h4>
     <pre>{
-  <span class="key">"access"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."</span>,
-  <span class="key">"refresh"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp..."</span>,
-  <span class="key">"user"</span>: {
-    <span class="key">"id"</span>: <span class="num">1</span>,
-    <span class="key">"email"</span>: <span class="str">"alumno@piobaroja.es"</span>,
-    <span class="key">"nombre"</span>: <span class="str">"María García"</span>,
-    <span class="key">"avatar"</span>: <span class="str">"https://lh3.googleusercontent.com/..."</span>,
-    <span class="key">"rol"</span>: <span class="str">"cliente"</span>
-  }
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6...",
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6...",
+    "user": {
+        "id": 1,
+        "email": "alumno@piobaroja.es",
+        "nombre": "María García",
+        "avatar": "https://lh3.googleusercontent.com/...",
+        "rol": "cliente"
+    }
 }</pre>
 
-    <h4>Ejemplo de respuesta — <code>GET /auth/me/</code></h4>
+    <h4>Ejemplo de respuesta de GET /auth/me/</h4>
     <pre>{
-  <span class="key">"id"</span>: <span class="num">1</span>,
-  <span class="key">"email"</span>: <span class="str">"alumno@piobaroja.es"</span>,
-  <span class="key">"nombre"</span>: <span class="str">"María García"</span>,
-  <span class="key">"avatar"</span>: <span class="str">"https://lh3.googleusercontent.com/..."</span>,
-  <span class="key">"rol"</span>: <span class="str">"cliente"</span>,
-  <span class="key">"fecha_registro"</span>: <span class="str">"2025-03-10T09:15:00Z"</span>
+    "id": 1,
+    "email": "alumno@piobaroja.es",
+    "nombre": "María García",
+    "avatar": "https://lh3.googleusercontent.com/...",
+    "rol": "cliente",
+    "fecha_registro": "2025-03-10T09:15:00Z"
 }</pre>
 
-    <!-- 2.2 PRODUCTOS -->
-    <h3 class="page-break">2.2. Productos</h3>
+
+    <!-- 2b PRODUCTOS -->
+    <h3 class="page-break">2b. Productos</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/productos/</code></td>
-            <td>Lista todos los productos disponibles con filtros opcionales.</td>
-            <td><span class="auth-none">Ninguna</span></td>
-            <td><strong>Query:</strong> <code>?categoria=bocadillos</code> <code>&search=jamón</code> <code>&saludable=true</code> <code>&page=1</code></td>
+            <td>Lista todos los productos. Se puede filtrar por categoría y buscar por nombre</td>
+            <td>No</td>
+            <td>Query: <code>?categoria=bocadillos&search=jamón&saludable=true</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/productos/{id}/</code></td>
-            <td>Detalle de un producto específico.</td>
-            <td><span class="auth-none">Ninguna</span></td>
+            <td>Devuelve el detalle de un producto concreto</td>
+            <td>No</td>
             <td>—</td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/categorias/</code></td>
-            <td>Lista todas las categorías de productos.</td>
-            <td><span class="auth-none">Ninguna</span></td>
+            <td>Lista todas las categorías</td>
+            <td>No</td>
             <td>—</td>
         </tr>
         <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/productos/</code></td>
-            <td>Crea un nuevo producto.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> nombre, descripción, precio, categoría, imagen, saludable</td>
+            <td>Crea un producto nuevo</td>
+            <td>Sí (dueño)</td>
+            <td>Body: nombre, descripcion, precio, categoria, imagen, saludable</td>
         </tr>
         <tr>
-            <td><span class="method put">PUT</span></td>
+            <td>PUT</td>
             <td><code>/productos/{id}/</code></td>
-            <td>Actualiza completamente un producto.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> todos los campos del producto</td>
+            <td>Actualiza un producto entero</td>
+            <td>Sí (dueño)</td>
+            <td>Body: todos los campos</td>
         </tr>
         <tr>
-            <td><span class="method patch">PATCH</span></td>
+            <td>PATCH</td>
             <td><code>/productos/{id}/</code></td>
-            <td>Actualiza parcialmente un producto (ej: stock, precio).</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> campos a modificar</td>
+            <td>Modifica campos sueltos de un producto (ej: solo el precio)</td>
+            <td>Sí (dueño)</td>
+            <td>Body: los campos que se quieran cambiar</td>
         </tr>
         <tr>
-            <td><span class="method delete">DELETE</span></td>
+            <td>DELETE</td>
             <td><code>/productos/{id}/</code></td>
-            <td>Elimina un producto del catálogo.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
+            <td>Elimina un producto</td>
+            <td>Sí (dueño)</td>
             <td>—</td>
         </tr>
     </table>
 
-    <h4>Ejemplo de respuesta — <code>GET /productos/</code></h4>
+    <h4>Ejemplo de respuesta de GET /productos/</h4>
     <pre>{
-  <span class="key">"count"</span>: <span class="num">12</span>,
-  <span class="key">"next"</span>: <span class="str">null</span>,
-  <span class="key">"previous"</span>: <span class="str">null</span>,
-  <span class="key">"results"</span>: [
-    {
-      <span class="key">"id"</span>: <span class="num">1</span>,
-      <span class="key">"nombre"</span>: <span class="str">"Bocadillo de Jamón Serrano"</span>,
-      <span class="key">"descripcion"</span>: <span class="str">"Pan crujiente con jamón serrano de calidad"</span>,
-      <span class="key">"precio"</span>: <span class="str">"3.50"</span>,
-      <span class="key">"categoria"</span>: {
-        <span class="key">"id"</span>: <span class="num">1</span>,
-        <span class="key">"nombre"</span>: <span class="str">"Bocadillos"</span>,
-        <span class="key">"icono"</span>: <span class="str">"sandwich"</span>
-      },
-      <span class="key">"imagen"</span>: <span class="str">"https://api.piobite.es/media/productos/jamon.jpg"</span>,
-      <span class="key">"saludable"</span>: <span class="num">false</span>,
-      <span class="key">"disponible"</span>: <span class="num">true</span>,
-      <span class="key">"stock"</span>: <span class="num">15</span>
-    }
-  ]
+    "count": 12,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "nombre": "Bocadillo de Jamón Serrano",
+            "descripcion": "Pan crujiente con jamón serrano de calidad",
+            "precio": "3.50",
+            "categoria": {
+                "id": 1,
+                "nombre": "Bocadillos"
+            },
+            "imagen": "https://api.piobite.es/media/productos/jamon.jpg",
+            "saludable": false,
+            "disponible": true,
+            "stock": 15
+        }
+    ]
 }</pre>
 
-    <!-- 2.3 CARRITO -->
-    <h3>2.3. Carrito</h3>
-    <div class="note note-info">
-        <strong>Nota:</strong> El carrito se gestiona en el frontend (almacenamiento local en el navegador). No existe un endpoint de carrito en el backend. El carrito se envía al backend solo cuando el usuario confirma el pedido, como parte del cuerpo de la petición <code>POST /pedidos/</code>.
+    <div class="nota">
+        <strong>Nota sobre el carrito:</strong> El carrito se gestiona en el frontend (en el estado de React, no en el backend). Solo se envía al servidor cuando el cliente confirma el pedido.
     </div>
 
-    <!-- 2.4 PEDIDOS -->
-    <h3>2.4. Pedidos</h3>
+
+    <!-- 2c PEDIDOS -->
+    <h3>2c. Pedidos</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/pedidos/</code></td>
-            <td>Lista los pedidos del usuario autenticado.</td>
-            <td><span class="auth-client">Cliente</span></td>
-            <td><strong>Query:</strong> <code>?estado=pendiente</code> <code>&page=1</code></td>
+            <td>Lista los pedidos del cliente que ha iniciado sesión</td>
+            <td>Sí (cliente)</td>
+            <td>Query: <code>?estado=pendiente</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/pedidos/{id}/</code></td>
-            <td>Detalle de un pedido con su código de recogida.</td>
-            <td><span class="auth-client">Cliente</span></td>
+            <td>Detalle de un pedido con su código de recogida</td>
+            <td>Sí (cliente)</td>
             <td>—</td>
         </tr>
         <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/pedidos/</code></td>
-            <td>Crea un nuevo pedido a partir del carrito.</td>
-            <td><span class="auth-client">Cliente</span></td>
-            <td><strong>Body:</strong> items, franja_horaria_id</td>
+            <td>Crea un pedido nuevo con los productos del carrito</td>
+            <td>Sí (cliente)</td>
+            <td>Body: items (lista de productos y cantidades), franja_horaria_id</td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/pedidos/admin/</code></td>
-            <td>Lista todos los pedidos (vista administración).</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Query:</strong> <code>?estado=preparando</code> <code>&fecha=2025-04-15</code></td>
+            <td>Lista todos los pedidos (para el panel de gestión)</td>
+            <td>Sí (dueño)</td>
+            <td>Query: <code>?estado=preparando&fecha=2025-04-15</code></td>
         </tr>
         <tr>
-            <td><span class="method patch">PATCH</span></td>
+            <td>PATCH</td>
             <td><code>/pedidos/{id}/estado/</code></td>
-            <td>Actualiza el estado de un pedido.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> <code>{ "estado": "preparando" }</code></td>
+            <td>Cambia el estado de un pedido</td>
+            <td>Sí (dueño)</td>
+            <td>Body: <code>{ "estado": "preparando" }</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/pedidos/verificar/{codigo}/</code></td>
-            <td>Verifica un pedido por su código de recogida.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
+            <td>Verifica un pedido por su código de recogida</td>
+            <td>Sí (dueño)</td>
             <td>—</td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/franjas-horarias/</code></td>
-            <td>Lista las franjas horarias disponibles para hoy.</td>
-            <td><span class="auth-client">Cliente</span></td>
-            <td><strong>Query:</strong> <code>?fecha=2025-04-15</code></td>
+            <td>Devuelve las franjas horarias disponibles para hoy</td>
+            <td>Sí (cliente)</td>
+            <td>Query: <code>?fecha=2025-04-15</code></td>
         </tr>
     </table>
 
-    <h4>Ejemplo de body — <code>POST /pedidos/</code></h4>
+    <h4>Ejemplo del body de POST /pedidos/</h4>
     <pre>{
-  <span class="key">"items"</span>: [
-    { <span class="key">"producto_id"</span>: <span class="num">1</span>, <span class="key">"cantidad"</span>: <span class="num">1</span> },
-    { <span class="key">"producto_id"</span>: <span class="num">7</span>, <span class="key">"cantidad"</span>: <span class="num">2</span> }
-  ],
-  <span class="key">"franja_horaria_id"</span>: <span class="num">3</span>
+    "items": [
+        { "producto_id": 1, "cantidad": 1 },
+        { "producto_id": 7, "cantidad": 2 }
+    ],
+    "franja_horaria_id": 3
 }</pre>
 
-    <h4>Ejemplo de respuesta — <code>GET /pedidos/{id}/</code></h4>
+    <h4>Ejemplo de respuesta de GET /pedidos/{id}/</h4>
     <pre>{
-  <span class="key">"id"</span>: <span class="num">42</span>,
-  <span class="key">"codigo_recogida"</span>: <span class="str">"PB2401"</span>,
-  <span class="key">"estado"</span>: <span class="str">"preparando"</span>,
-  <span class="key">"fecha"</span>: <span class="str">"2025-04-15T10:30:00Z"</span>,
-  <span class="key">"franja_horaria"</span>: <span class="str">"10:00 - 10:30"</span>,
-  <span class="key">"items"</span>: [
-    {
-      <span class="key">"producto"</span>: { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"nombre"</span>: <span class="str">"Bocadillo de Jamón Serrano"</span> },
-      <span class="key">"cantidad"</span>: <span class="num">1</span>,
-      <span class="key">"precio_unitario"</span>: <span class="str">"3.50"</span>,
-      <span class="key">"subtotal"</span>: <span class="str">"3.50"</span>
-    },
-    {
-      <span class="key">"producto"</span>: { <span class="key">"id"</span>: <span class="num">7</span>, <span class="key">"nombre"</span>: <span class="str">"Café con Leche"</span> },
-      <span class="key">"cantidad"</span>: <span class="num">2</span>,
-      <span class="key">"precio_unitario"</span>: <span class="str">"1.50"</span>,
-      <span class="key">"subtotal"</span>: <span class="str">"3.00"</span>
-    }
-  ],
-  <span class="key">"total"</span>: <span class="str">"6.50"</span>,
-  <span class="key">"pagado"</span>: <span class="num">true</span>,
-  <span class="key">"metodo_pago"</span>: <span class="str">"redsys"</span>
+    "id": 42,
+    "codigo_recogida": "PB2401",
+    "estado": "preparando",
+    "fecha": "2025-04-15T10:30:00Z",
+    "franja_horaria": "10:00 - 10:30",
+    "items": [
+        {
+            "producto": { "id": 1, "nombre": "Bocadillo de Jamón Serrano" },
+            "cantidad": 1,
+            "precio_unitario": "3.50",
+            "subtotal": "3.50"
+        },
+        {
+            "producto": { "id": 7, "nombre": "Café con Leche" },
+            "cantidad": 2,
+            "precio_unitario": "1.50",
+            "subtotal": "3.00"
+        }
+    ],
+    "total": "6.50",
+    "pagado": true
 }</pre>
 
-    <!-- 2.5 PAGOS -->
-    <h3 class="page-break">2.5. Pagos (Redsys)</h3>
+
+    <!-- 2d PAGOS -->
+    <h3 class="page-break">2d. Pagos (Redsys)</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/pagos/iniciar/</code></td>
-            <td>Genera los parámetros necesarios para redirigir al usuario a la pasarela Redsys.</td>
-            <td><span class="auth-client">Cliente</span></td>
-            <td><strong>Body:</strong> <code>{ "pedido_id": 42 }</code></td>
+            <td>Genera los datos que el frontend necesita para redirigir al usuario a Redsys</td>
+            <td>Sí (cliente)</td>
+            <td>Body: <code>{ "pedido_id": 42 }</code></td>
         </tr>
         <tr>
-            <td><span class="method post">POST</span></td>
+            <td>POST</td>
             <td><code>/pagos/notificacion/</code></td>
-            <td>Webhook que recibe la notificación de Redsys con el resultado del pago (URL de notificación).</td>
-            <td><span class="auth-none">Redsys (IP verificada)</span></td>
-            <td><strong>Body:</strong> Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature</td>
+            <td>Recibe la notificación de Redsys con el resultado del pago (servidor a servidor)</td>
+            <td>No (viene de Redsys)</td>
+            <td>Body: Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature</td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/pagos/resultado/</code></td>
-            <td>Página de retorno tras el pago. Redirige al frontend con el estado.</td>
-            <td><span class="auth-none">Ninguna</span></td>
-            <td><strong>Query:</strong> Ds_SignatureVersion, Ds_MerchantParameters, Ds_Signature</td>
+            <td>URL a la que Redsys redirige al usuario tras pagar. Redirige al frontend.</td>
+            <td>No</td>
+            <td>Query: parámetros de Redsys</td>
         </tr>
     </table>
 
-    <h4>Ejemplo de respuesta — <code>POST /pagos/iniciar/</code></h4>
+    <h4>Ejemplo de respuesta de POST /pagos/iniciar/</h4>
     <pre>{
-  <span class="key">"redsys_url"</span>: <span class="str">"https://sis-t.redsys.es:25443/sis/realizarPago"</span>,
-  <span class="key">"Ds_SignatureVersion"</span>: <span class="str">"HMAC_SHA256_V1"</span>,
-  <span class="key">"Ds_MerchantParameters"</span>: <span class="str">"eyJEc19NZXJjaGFudF9Nb..."</span>,
-  <span class="key">"Ds_Signature"</span>: <span class="str">"qWgR7/bKpP0n9M1dGK3..."</span>
+    "redsys_url": "https://sis-t.redsys.es:25443/sis/realizarPago",
+    "Ds_SignatureVersion": "HMAC_SHA256_V1",
+    "Ds_MerchantParameters": "eyJEc19NZXJjaGFudF9Nb...",
+    "Ds_Signature": "qWgR7/bKpP0n9M1dGK3..."
 }</pre>
 
-    <div class="note">
-        <strong>Importante:</strong> El frontend recibe estos parámetros y crea un formulario oculto que envía al usuario a la URL de Redsys mediante POST. No se realiza la llamada por AJAX sino por redirección del navegador.
+    <div class="nota">
+        <strong>Importante:</strong> El frontend no llama a Redsys por AJAX. Lo que hace es crear un formulario oculto con estos datos y enviarlo, redirigiendo al usuario a la página de pago de Redsys.
     </div>
 
-    <!-- 2.6 INVENTARIO -->
-    <h3>2.6. Inventario (Panel Dueño)</h3>
+
+    <!-- 2e INVENTARIO -->
+    <h3>2e. Inventario (Panel Dueño)</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/inventario/</code></td>
-            <td>Lista todos los productos con información de stock actual.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Query:</strong> <code>?stock_bajo=true</code> <code>&categoria=bocadillos</code></td>
+            <td>Lista productos con su stock actual</td>
+            <td>Sí (dueño)</td>
+            <td>Query: <code>?stock_bajo=true</code></td>
         </tr>
         <tr>
-            <td><span class="method patch">PATCH</span></td>
+            <td>PATCH</td>
             <td><code>/inventario/{producto_id}/</code></td>
-            <td>Actualiza el stock de un producto.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> <code>{ "stock": 25, "disponible": true }</code></td>
-        </tr>
-        <tr>
-            <td><span class="method post">POST</span></td>
-            <td><code>/inventario/ajuste-masivo/</code></td>
-            <td>Ajuste masivo de stock para múltiples productos.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Body:</strong> <code>{ "ajustes": [{ "producto_id": 1, "stock": 20 }] }</code></td>
+            <td>Actualiza el stock de un producto</td>
+            <td>Sí (dueño)</td>
+            <td>Body: <code>{ "stock": 25, "disponible": true }</code></td>
         </tr>
     </table>
 
-    <h4>Ejemplo de respuesta — <code>GET /inventario/</code></h4>
+    <h4>Ejemplo de respuesta de GET /inventario/</h4>
     <pre>{
-  <span class="key">"results"</span>: [
-    {
-      <span class="key">"producto_id"</span>: <span class="num">1</span>,
-      <span class="key">"nombre"</span>: <span class="str">"Bocadillo de Jamón Serrano"</span>,
-      <span class="key">"stock"</span>: <span class="num">15</span>,
-      <span class="key">"stock_minimo"</span>: <span class="num">5</span>,
-      <span class="key">"disponible"</span>: <span class="num">true</span>,
-      <span class="key">"ultima_actualizacion"</span>: <span class="str">"2025-04-15T08:00:00Z"</span>
-    }
-  ]
+    "results": [
+        {
+            "producto_id": 1,
+            "nombre": "Bocadillo de Jamón Serrano",
+            "stock": 15,
+            "stock_minimo": 5,
+            "disponible": true,
+            "ultima_actualizacion": "2025-04-15T08:00:00Z"
+        }
+    ]
 }</pre>
 
-    <!-- 2.7 ESTADISTICAS -->
-    <h3>2.7. Estadísticas (Panel Dueño)</h3>
+
+    <!-- 2f ESTADISTICAS -->
+    <h3>2f. Estadísticas (Panel Dueño)</h3>
 
     <table>
+        <tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Auth</th><th>Parámetros</th></tr>
         <tr>
-            <th>Método</th>
-            <th>Ruta</th>
-            <th>Descripción</th>
-            <th>Auth</th>
-            <th>Parámetros</th>
-        </tr>
-        <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/estadisticas/ventas/</code></td>
-            <td>Resumen de ventas por período.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Query:</strong> <code>?desde=2025-04-01</code> <code>&hasta=2025-04-15</code> <code>&agrupacion=dia</code></td>
+            <td>Ventas agrupadas por día en un rango de fechas</td>
+            <td>Sí (dueño)</td>
+            <td>Query: <code>?desde=2025-04-01&hasta=2025-04-15</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/estadisticas/productos-top/</code></td>
-            <td>Productos más vendidos en un período.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
-            <td><strong>Query:</strong> <code>?desde=2025-04-01</code> <code>&limite=10</code></td>
+            <td>Los productos más vendidos</td>
+            <td>Sí (dueño)</td>
+            <td>Query: <code>?desde=2025-04-01&limite=10</code></td>
         </tr>
         <tr>
-            <td><span class="method get">GET</span></td>
+            <td>GET</td>
             <td><code>/estadisticas/resumen/</code></td>
-            <td>Dashboard con métricas generales del día.</td>
-            <td><span class="auth-owner">Dueño/Staff</span></td>
+            <td>Resumen del día: pedidos, ingresos, producto más vendido...</td>
+            <td>Sí (dueño)</td>
             <td>—</td>
         </tr>
     </table>
 
-    <h4>Ejemplo de respuesta — <code>GET /estadisticas/resumen/</code></h4>
+    <h4>Ejemplo de respuesta de GET /estadisticas/resumen/</h4>
     <pre>{
-  <span class="key">"fecha"</span>: <span class="str">"2025-04-15"</span>,
-  <span class="key">"pedidos_hoy"</span>: <span class="num">34</span>,
-  <span class="key">"ingresos_hoy"</span>: <span class="str">"127.50"</span>,
-  <span class="key">"ticket_medio"</span>: <span class="str">"3.75"</span>,
-  <span class="key">"producto_mas_vendido"</span>: <span class="str">"Bocadillo de Jamón Serrano"</span>,
-  <span class="key">"pedidos_pendientes"</span>: <span class="num">5</span>,
-  <span class="key">"productos_stock_bajo"</span>: <span class="num">2</span>
+    "fecha": "2025-04-15",
+    "pedidos_hoy": 34,
+    "ingresos_hoy": "127.50",
+    "ticket_medio": "3.75",
+    "producto_mas_vendido": "Bocadillo de Jamón Serrano",
+    "pedidos_pendientes": 5
 }</pre>
 
-    <!-- 3. FLUJO AUTENTICACION -->
+
+    <!-- 3. FLUJO AUTH -->
     <h2 class="page-break">3. Flujo de Autenticación con Google SSO</h2>
 
-    <p>A continuación se describe paso a paso el flujo completo de autenticación desde que el usuario pulsa "Iniciar sesión con Google" hasta que puede operar con la aplicación.</p>
+    <p>Cuando el usuario pulsa "Iniciar sesión con Google" pasan los siguientes pasos:</p>
 
-    <div class="flow">
-        <div class="flow-step">
-            <div class="flow-num">1</div>
-            <div class="flow-content">
-                <div class="flow-label">El usuario pulsa "Iniciar sesión con Google"</div>
-                <div class="flow-detail">El <strong>frontend</strong> redirige al usuario a la página de consentimiento de Google OAuth 2.0, incluyendo el <code>client_id</code>, <code>redirect_uri</code> y los scopes necesarios (<code>openid</code>, <code>email</code>, <code>profile</code>).</div>
-                <br>
-                <pre style="font-size:11px">https://accounts.google.com/o/oauth2/v2/auth?
-  client_id=GOOGLE_CLIENT_ID&
-  redirect_uri=https://piobite.es/auth/callback&
-  response_type=code&
-  scope=openid email profile&
-  state=random_csrf_token</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">2</div>
-            <div class="flow-content">
-                <div class="flow-label">Google muestra la pantalla de consentimiento</div>
-                <div class="flow-detail">El usuario selecciona su cuenta de Google (por ejemplo, su cuenta del instituto <code>@piobaroja.es</code>) y acepta los permisos solicitados.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">3</div>
-            <div class="flow-content">
-                <div class="flow-label">Google redirige al frontend con un código de autorización</div>
-                <div class="flow-detail">Google redirige al usuario de vuelta a la <code>redirect_uri</code> del frontend con un parámetro <code>code</code> en la URL.</div>
-                <br>
-                <pre style="font-size:11px">https://piobite.es/auth/callback?code=4/0AX4XfWh...&state=random_csrf_token</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">4</div>
-            <div class="flow-content">
-                <div class="flow-label">El frontend envía el código al backend</div>
-                <div class="flow-detail">El frontend extrae el <code>code</code> de la URL y lo envía al backend mediante una petición POST.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Frontend → Backend</span>
-POST /api/v1/auth/google/
-{ <span class="key">"code"</span>: <span class="str">"4/0AX4XfWh..."</span> }</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">5</div>
-            <div class="flow-content">
-                <div class="flow-label">El backend intercambia el código con Google</div>
-                <div class="flow-detail">El backend utiliza el <code>code</code> junto con su <code>client_secret</code> para solicitar a Google un <code>id_token</code> y un <code>access_token</code> a través del endpoint <code>https://oauth2.googleapis.com/token</code>.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Backend → Google</span>
-POST https://oauth2.googleapis.com/token
-{ client_id, client_secret, code, grant_type: "authorization_code", redirect_uri }</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">6</div>
-            <div class="flow-content">
-                <div class="flow-label">El backend valida los datos y crea/recupera al usuario</div>
-                <div class="flow-detail">El backend decodifica el <code>id_token</code> de Google para obtener el email, nombre y avatar del usuario. Busca al usuario en la base de datos. Si no existe, lo crea con rol <code>cliente</code> por defecto. Si ya existe, recupera sus datos.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">7</div>
-            <div class="flow-content">
-                <div class="flow-label">El backend genera tokens JWT propios y los devuelve al frontend</div>
-                <div class="flow-detail">El backend genera un <code>access_token</code> (corta duración, 15 minutos) y un <code>refresh_token</code> (larga duración, 7 días) firmados con la clave secreta del servidor. Se devuelven al frontend junto con los datos del usuario.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Backend → Frontend</span>
-{
-  <span class="key">"access"</span>: <span class="str">"eyJhbGciOiJIUzI1NiJ9..."</span>,
-  <span class="key">"refresh"</span>: <span class="str">"eyJhbGciOiJIUzI1NiJ9..."</span>,
-  <span class="key">"user"</span>: { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"email"</span>: <span class="str">"alumno@piobaroja.es"</span>, <span class="key">"rol"</span>: <span class="str">"cliente"</span> }
-}</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">8</div>
-            <div class="flow-content">
-                <div class="flow-label">El frontend almacena los tokens y redirige al usuario</div>
-                <div class="flow-detail">El frontend almacena el <code>access_token</code> en memoria (variable de estado) y el <code>refresh_token</code> en una cookie <code>httpOnly</code> o en <code>localStorage</code>. A partir de este momento, todas las peticiones al backend incluyen la cabecera <code>Authorization: Bearer &lt;access_token&gt;</code>. El usuario es redirigido al catálogo de productos.</div>
-            </div>
-        </div>
-    </div>
+    <ol>
+        <li><strong>El frontend redirige a Google.</strong> Se le envía al usuario a la pantalla de login de Google con nuestro <code>client_id</code> y los permisos que necesitamos (email y perfil).</li>
 
-    <div class="note note-green">
-        <strong>Renovación automática:</strong> Cuando el <code>access_token</code> expira, el frontend detecta una respuesta <code>401</code>, envía automáticamente el <code>refresh_token</code> a <code>POST /auth/refresh/</code> para obtener un nuevo <code>access_token</code>, y reintenta la petición original de forma transparente para el usuario.
-    </div>
+        <li><strong>El usuario elige su cuenta de Google</strong> y acepta los permisos.</li>
+
+        <li><strong>Google redirige de vuelta al frontend</strong> con un parámetro <code>code</code> en la URL. Este código es temporal y de un solo uso.</li>
+
+        <li><strong>El frontend envía ese código al backend.</strong>
+        <pre>POST /api/v1/auth/google/
+{ "code": "4/0AX4XfWh..." }</pre></li>
+
+        <li><strong>El backend usa ese código para hablar con Google.</strong> Le envía el código junto con nuestro <code>client_secret</code> al endpoint de Google <code>https://oauth2.googleapis.com/token</code> y recibe a cambio un <code>id_token</code> con los datos del usuario.</li>
+
+        <li><strong>El backend crea o recupera al usuario.</strong> Saca el email, nombre y foto del <code>id_token</code>. Si el usuario no existía en nuestra base de datos, lo crea con rol "cliente". Si ya existía, simplemente lo recupera.</li>
+
+        <li><strong>El backend genera tokens JWT propios</strong> y los devuelve al frontend:
+            <ul>
+                <li><code>access_token</code>: dura 15 minutos, se usa para autenticar las peticiones.</li>
+                <li><code>refresh_token</code>: dura 7 días, se usa para renovar el access cuando caduca.</li>
+            </ul>
+        <pre>{
+    "access": "eyJhbGciOiJIUzI1NiJ9...",
+    "refresh": "eyJhbGciOiJIUzI1NiJ9...",
+    "user": { "id": 1, "email": "alumno@piobaroja.es", "rol": "cliente" }
+}</pre></li>
+
+        <li><strong>El frontend guarda los tokens</strong> y redirige al usuario al catálogo. A partir de aquí, cada petición al backend incluye la cabecera <code>Authorization: Bearer &lt;access_token&gt;</code>.</li>
+    </ol>
+
+    <p>Cuando el access token caduca (al cabo de 15 min), el frontend detecta que recibe un error 401, envía automáticamente el refresh token a <code>POST /auth/refresh/</code> para conseguir un nuevo access token, y reintenta la petición original sin que el usuario se entere.</p>
+
 
     <!-- 4. FLUJO PEDIDO -->
     <h2 class="page-break">4. Flujo de un Pedido Completo</h2>
 
-    <p>Ciclo de vida completo de un pedido desde la selección de productos hasta la recogida en la cafetería.</p>
+    <p>Este es el recorrido completo de un pedido desde que el cliente elige productos hasta que los recoge:</p>
 
-    <div class="flow">
-        <div class="flow-step">
-            <div class="flow-num">1</div>
-            <div class="flow-content">
-                <div class="flow-label">El cliente explora el catálogo y añade productos al carrito</div>
-                <div class="flow-detail">El frontend solicita los productos al backend (<code>GET /productos/</code>) y los muestra al usuario. El carrito se gestiona localmente en el navegador (estado de React). No se envía nada al backend en este paso.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">2</div>
-            <div class="flow-content">
-                <div class="flow-label">El cliente selecciona la franja horaria de recogida</div>
-                <div class="flow-detail">El frontend solicita las franjas disponibles (<code>GET /franjas-horarias/?fecha=2025-04-15</code>). El usuario elige una franja entre las que tienen disponibilidad.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">3</div>
-            <div class="flow-content">
-                <div class="flow-label">El cliente confirma el pedido</div>
-                <div class="flow-detail">El frontend envía el carrito y la franja seleccionada al backend.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Frontend → Backend</span>
-POST /api/v1/pedidos/
-{
-  <span class="key">"items"</span>: [
-    { <span class="key">"producto_id"</span>: <span class="num">1</span>, <span class="key">"cantidad"</span>: <span class="num">1</span> },
-    { <span class="key">"producto_id"</span>: <span class="num">7</span>, <span class="key">"cantidad"</span>: <span class="num">2</span> }
-  ],
-  <span class="key">"franja_horaria_id"</span>: <span class="num">3</span>
-}</pre>
-                <div class="flow-detail">El backend valida la disponibilidad de stock, calcula el total, genera un código único de recogida (ej: <code>PB2401</code>) y crea el pedido con estado <code>pendiente_pago</code>. Devuelve el ID del pedido.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">4</div>
-            <div class="flow-content">
-                <div class="flow-label">El frontend inicia el proceso de pago con Redsys</div>
-                <div class="flow-detail">El frontend solicita al backend los datos necesarios para redirigir al usuario a la pasarela de pago.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Frontend → Backend</span>
-POST /api/v1/pagos/iniciar/
-{ <span class="key">"pedido_id"</span>: <span class="num">42</span> }
+    <ol>
+        <li><strong>El cliente mira el catálogo y añade productos al carrito.</strong><br>
+        El frontend pide los productos al backend con <code>GET /productos/</code> y los muestra. El carrito se gestiona en local (estado de React), no se envía nada al servidor todavía.</li>
 
-<span class="comment">// Backend → Frontend</span>
-{
-  <span class="key">"redsys_url"</span>: <span class="str">"https://sis-t.redsys.es:25443/sis/realizarPago"</span>,
-  <span class="key">"Ds_SignatureVersion"</span>: <span class="str">"HMAC_SHA256_V1"</span>,
-  <span class="key">"Ds_MerchantParameters"</span>: <span class="str">"eyJEc19NZXJjaGFudF9Nb..."</span>,
-  <span class="key">"Ds_Signature"</span>: <span class="str">"qWgR7/bKpP0n9M1dGK3..."</span>
-}</pre>
-                <div class="flow-detail">El backend genera los <code>Ds_MerchantParameters</code> (codificados en Base64) que contienen: número de pedido, importe en céntimos, moneda (978 = EUR), URL de notificación y URL de retorno. Firma los datos con la clave secreta del comercio para generar <code>Ds_Signature</code>.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">5</div>
-            <div class="flow-content">
-                <div class="flow-label">El usuario es redirigido a Redsys y realiza el pago</div>
-                <div class="flow-detail">El frontend crea un formulario oculto con los parámetros de Redsys y lo envía automáticamente (POST). El usuario ve la página de pago de Redsys donde introduce su tarjeta y confirma la operación (puede incluir verificación 3D Secure).</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">6</div>
-            <div class="flow-content">
-                <div class="flow-label">Redsys notifica al backend el resultado del pago</div>
-                <div class="flow-detail">Redsys envía una notificación HTTP al backend (servidor a servidor) a la URL de notificación configurada.</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Redsys → Backend (notificación servidor-a-servidor)</span>
-POST /api/v1/pagos/notificacion/
-{
-  <span class="key">"Ds_SignatureVersion"</span>: <span class="str">"HMAC_SHA256_V1"</span>,
-  <span class="key">"Ds_MerchantParameters"</span>: <span class="str">"..."</span>,
-  <span class="key">"Ds_Signature"</span>: <span class="str">"..."</span>
-}</pre>
-                <div class="flow-detail">El backend verifica la firma de Redsys, decodifica los parámetros y comprueba el código de respuesta (<code>Ds_Response</code>). Si el pago es correcto (código 0000-0099), actualiza el estado del pedido a <code>pendiente</code> (pagado, pendiente de preparación). Si falla, marca el pedido como <code>pago_fallido</code>.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">7</div>
-            <div class="flow-content">
-                <div class="flow-label">El usuario es redirigido de vuelta a la aplicación</div>
-                <div class="flow-detail">Tras completar el pago, Redsys redirige al usuario a <code>GET /pagos/resultado/</code>, que a su vez redirige al frontend a la pantalla de confirmación con el código QR del pedido.</div>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">8</div>
-            <div class="flow-content">
-                <div class="flow-label">La cafetería gestiona el pedido</div>
-                <div class="flow-detail">El personal de cafetería ve el nuevo pedido en el panel de administración (<code>GET /pedidos/admin/</code>). Actualiza el estado según avanza la preparación:</div>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Transiciones de estado del pedido:</span>
-pendiente_pago → pendiente → preparando → listo → entregado
-                      ↓
-                 pago_fallido</pre>
-                <br>
-                <pre style="font-size:11px"><span class="comment">// Staff actualiza estado</span>
-PATCH /api/v1/pedidos/42/estado/
-{ <span class="key">"estado"</span>: <span class="str">"preparando"</span> }</pre>
-            </div>
-        </div>
-        <div class="flow-step">
-            <div class="flow-num">9</div>
-            <div class="flow-content">
-                <div class="flow-label">El cliente recoge su pedido</div>
-                <div class="flow-detail">El cliente muestra el código QR o alfanumérico (<code>PB2401</code>) en la cafetería. El personal verifica el código (<code>GET /pedidos/verificar/PB2401/</code>), entrega el pedido y actualiza el estado a <code>entregado</code>.</div>
-            </div>
-        </div>
-    </div>
+        <li><strong>El cliente elige la franja horaria de recogida.</strong><br>
+        El frontend consulta las franjas disponibles con <code>GET /franjas-horarias/?fecha=2025-04-15</code> y el usuario elige una.</li>
 
-    <!-- 5. GESTION DE ERRORES -->
+        <li><strong>El cliente confirma el pedido.</strong><br>
+        El frontend envía el carrito y la franja al backend:
+        <pre>POST /api/v1/pedidos/
+{
+    "items": [
+        { "producto_id": 1, "cantidad": 1 },
+        { "producto_id": 7, "cantidad": 2 }
+    ],
+    "franja_horaria_id": 3
+}</pre>
+        El backend comprueba el stock, calcula el total, genera un código de recogida (ej: PB2401) y crea el pedido con estado <code>pendiente_pago</code>.</li>
+
+        <li><strong>Se inicia el pago con Redsys.</strong><br>
+        El frontend pide los datos de pago al backend con <code>POST /pagos/iniciar/</code>. El backend genera los parámetros firmados que Redsys necesita (importe en céntimos, número de pedido, firma HMAC SHA256) y se los devuelve al frontend.</li>
+
+        <li><strong>El usuario paga en Redsys.</strong><br>
+        El frontend crea un formulario oculto con los datos de Redsys y lo envía automáticamente, redirigiendo al usuario a la pasarela. Ahí mete los datos de su tarjeta y confirma (puede pasar por verificación 3D Secure).</li>
+
+        <li><strong>Redsys avisa al backend del resultado.</strong><br>
+        Redsys hace una llamada POST directa al backend (<code>POST /pagos/notificacion/</code>) de servidor a servidor. El backend verifica la firma, comprueba que el código de respuesta sea correcto (0000-0099 = pago OK) y actualiza el pedido a estado <code>pendiente</code> si el pago fue bien, o a <code>pago_fallido</code> si no.</li>
+
+        <li><strong>El usuario vuelve a la app.</strong><br>
+        Redsys redirige al usuario de vuelta a nuestra web. El frontend le muestra la pantalla de confirmación con el código QR y el código de recogida.</li>
+
+        <li><strong>La cafetería prepara el pedido.</strong><br>
+        El personal ve el pedido en su panel (<code>GET /pedidos/admin/</code>) y va cambiando su estado según avanza:
+        <pre>pendiente_pago → pendiente → preparando → listo → entregado</pre>
+        Cada cambio se hace con: <code>PATCH /pedidos/{id}/estado/</code></li>
+
+        <li><strong>El cliente recoge su pedido.</strong><br>
+        El cliente enseña su código QR o dice su código (PB2401). El personal lo verifica con <code>GET /pedidos/verificar/PB2401/</code>, le entrega la comida y marca el pedido como <code>entregado</code>.</li>
+    </ol>
+
+
+    <!-- 5. ERRORES -->
     <h2 class="page-break">5. Gestión de Errores</h2>
 
-    <h3>5.1. Estructura estándar de respuesta de error</h3>
-    <p>Todas las respuestas de error siguen una estructura uniforme para facilitar el manejo en el frontend:</p>
-    <pre>{
-  <span class="key">"error"</span>: {
-    <span class="key">"codigo"</span>: <span class="str">"TOKEN_EXPIRADO"</span>,
-    <span class="key">"mensaje"</span>: <span class="str">"El token de acceso ha expirado. Utiliza el refresh token para obtener uno nuevo."</span>,
-    <span class="key">"detalles"</span>: <span class="str">null</span>
-  }
-}</pre>
+    <h3>Estructura de las respuestas de error</h3>
 
-    <p>En caso de errores de validación, el campo <code>detalles</code> contiene los errores específicos por campo:</p>
+    <p>Todas las respuestas de error van a tener este formato para que el frontend siempre sepa cómo leerlas:</p>
+
     <pre>{
-  <span class="key">"error"</span>: {
-    <span class="key">"codigo"</span>: <span class="str">"VALIDACION_FALLIDA"</span>,
-    <span class="key">"mensaje"</span>: <span class="str">"Los datos enviados contienen errores."</span>,
-    <span class="key">"detalles"</span>: {
-      <span class="key">"items"</span>: [<span class="str">"Este campo es obligatorio."</span>],
-      <span class="key">"franja_horaria_id"</span>: [<span class="str">"La franja horaria seleccionada ya no está disponible."</span>]
+    "error": {
+        "codigo": "TOKEN_EXPIRADO",
+        "mensaje": "El token de acceso ha expirado.",
+        "detalles": null
     }
-  }
 }</pre>
 
-    <h3>5.2. Códigos de estado HTTP</h3>
+    <p>En los errores de validación, el campo "detalles" incluye qué campo está mal:</p>
 
-    <table class="status-table">
-        <tr><th>Código</th><th>Situación</th><th>Código interno</th><th>Ejemplo de mensaje</th></tr>
-        <tr>
-            <td style="color:#22c55e;">200 OK</td>
-            <td>Petición exitosa</td>
-            <td>—</td>
-            <td>—</td>
-        </tr>
-        <tr>
-            <td style="color:#22c55e;">201 Created</td>
-            <td>Recurso creado correctamente (nuevo pedido, nuevo producto)</td>
-            <td>—</td>
-            <td>—</td>
-        </tr>
-        <tr>
-            <td style="color:#22c55e;">204 No Content</td>
-            <td>Eliminación exitosa</td>
-            <td>—</td>
-            <td>—</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">400 Bad Request</td>
-            <td>Error de validación en los datos de entrada</td>
-            <td><code>VALIDACION_FALLIDA</code></td>
-            <td>"Los datos enviados contienen errores."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">400 Bad Request</td>
-            <td>Stock insuficiente al crear pedido</td>
-            <td><code>STOCK_INSUFICIENTE</code></td>
-            <td>"El producto 'Ensalada César' no tiene stock suficiente (disponible: 0)."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">400 Bad Request</td>
-            <td>Franja horaria no disponible</td>
-            <td><code>FRANJA_NO_DISPONIBLE</code></td>
-            <td>"La franja horaria 11:30-12:00 está completa."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">401 Unauthorized</td>
-            <td>Token no proporcionado o mal formado</td>
-            <td><code>TOKEN_INVALIDO</code></td>
-            <td>"No se ha proporcionado un token de autenticación válido."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">401 Unauthorized</td>
-            <td>Token expirado</td>
-            <td><code>TOKEN_EXPIRADO</code></td>
-            <td>"El token de acceso ha expirado."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">401 Unauthorized</td>
-            <td>Código de Google inválido o expirado</td>
-            <td><code>GOOGLE_AUTH_FALLIDA</code></td>
-            <td>"No se pudo verificar la identidad con Google."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">403 Forbidden</td>
-            <td>Permisos insuficientes (cliente intenta acceder a endpoints de dueño)</td>
-            <td><code>PERMISOS_INSUFICIENTES</code></td>
-            <td>"No tienes permisos para realizar esta acción."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">404 Not Found</td>
-            <td>Recurso no encontrado (producto, pedido, código de recogida)</td>
-            <td><code>NO_ENCONTRADO</code></td>
-            <td>"El pedido con código 'PB9999' no existe."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">409 Conflict</td>
-            <td>Transición de estado inválida en pedido</td>
-            <td><code>TRANSICION_INVALIDA</code></td>
-            <td>"No se puede pasar un pedido de 'entregado' a 'preparando'."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">422 Unprocessable Entity</td>
-            <td>Error en la pasarela de pago Redsys</td>
-            <td><code>PAGO_FALLIDO</code></td>
-            <td>"El pago ha sido rechazado por la pasarela. Código Redsys: 0190 (Denegación sin especificar motivo)."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">422 Unprocessable Entity</td>
-            <td>Firma de Redsys inválida</td>
-            <td><code>FIRMA_INVALIDA</code></td>
-            <td>"La firma de la notificación de pago no es válida."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">429 Too Many Requests</td>
-            <td>Demasiadas peticiones (rate limiting)</td>
-            <td><code>LIMITE_EXCEDIDO</code></td>
-            <td>"Has excedido el límite de peticiones. Inténtalo de nuevo en 60 segundos."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">500 Internal Server Error</td>
-            <td>Error interno del servidor</td>
-            <td><code>ERROR_INTERNO</code></td>
-            <td>"Ha ocurrido un error interno. Inténtalo de nuevo más tarde."</td>
-        </tr>
-        <tr>
-            <td style="color:#ef4444;">503 Service Unavailable</td>
-            <td>Servicio de Redsys no disponible</td>
-            <td><code>PASARELA_NO_DISPONIBLE</code></td>
-            <td>"La pasarela de pago no está disponible temporalmente."</td>
-        </tr>
-    </table>
+    <pre>{
+    "error": {
+        "codigo": "VALIDACION_FALLIDA",
+        "mensaje": "Los datos enviados contienen errores.",
+        "detalles": {
+            "items": ["Este campo es obligatorio."],
+            "franja_horaria_id": ["La franja seleccionada ya no está disponible."]
+        }
+    }
+}</pre>
 
-    <h3>5.3. Manejo de errores en el frontend</h3>
-    <p>El frontend debe implementar la siguiente lógica para manejar los errores de forma consistente:</p>
+    <h3>Códigos de estado HTTP utilizados</h3>
 
     <table>
-        <tr><th>Código HTTP</th><th>Acción del frontend</th></tr>
-        <tr><td><code>400</code></td><td>Mostrar los mensajes de error junto a los campos del formulario correspondientes.</td></tr>
-        <tr><td><code>401</code> con código <code>TOKEN_EXPIRADO</code></td><td>Intentar renovar el token automáticamente con <code>POST /auth/refresh/</code>. Si falla, redirigir al login.</td></tr>
-        <tr><td><code>401</code> con otros códigos</td><td>Redirigir al usuario a la pantalla de login.</td></tr>
-        <tr><td><code>403</code></td><td>Mostrar mensaje "No tienes permisos" y redirigir a la pantalla principal.</td></tr>
-        <tr><td><code>404</code></td><td>Mostrar pantalla de "No encontrado".</td></tr>
-        <tr><td><code>422</code> (pago)</td><td>Mostrar mensaje de error de pago y ofrecer reintentar.</td></tr>
-        <tr><td><code>429</code></td><td>Mostrar aviso de límite excedido con cuenta atrás.</td></tr>
-        <tr><td><code>500 / 503</code></td><td>Mostrar pantalla genérica de error con opción de reintentar.</td></tr>
+        <tr><th>Código</th><th>Cuándo se usa</th><th>Ejemplo</th></tr>
+        <tr><td>200</td><td>Todo ha ido bien</td><td>—</td></tr>
+        <tr><td>201</td><td>Se ha creado un recurso nuevo (pedido, producto...)</td><td>—</td></tr>
+        <tr><td>204</td><td>Se ha eliminado correctamente</td><td>—</td></tr>
+        <tr><td>400</td><td>Datos de entrada incorrectos o falta algún campo</td><td>"Los datos enviados contienen errores."</td></tr>
+        <tr><td>400</td><td>No hay stock suficiente</td><td>"El producto 'Ensalada César' no tiene stock (disponible: 0)."</td></tr>
+        <tr><td>401</td><td>No se ha enviado token o el token es inválido</td><td>"No se ha proporcionado un token válido."</td></tr>
+        <tr><td>401</td><td>El token ha caducado</td><td>"El token de acceso ha expirado."</td></tr>
+        <tr><td>401</td><td>El código de Google no es válido</td><td>"No se pudo verificar la identidad con Google."</td></tr>
+        <tr><td>403</td><td>El usuario no tiene permisos (ej: un cliente intenta acceder al inventario)</td><td>"No tienes permisos para realizar esta acción."</td></tr>
+        <tr><td>404</td><td>No se encuentra el recurso (producto, pedido, código de recogida)</td><td>"El pedido con código 'PB9999' no existe."</td></tr>
+        <tr><td>409</td><td>Transición de estado no válida en un pedido</td><td>"No se puede pasar de 'entregado' a 'preparando'."</td></tr>
+        <tr><td>422</td><td>El pago ha sido rechazado por Redsys</td><td>"El pago ha sido rechazado. Código Redsys: 0190."</td></tr>
+        <tr><td>422</td><td>La firma de Redsys no es válida</td><td>"La firma de la notificación de pago no es válida."</td></tr>
+        <tr><td>429</td><td>Demasiadas peticiones seguidas</td><td>"Has excedido el límite de peticiones. Espera 60 segundos."</td></tr>
+        <tr><td>500</td><td>Error interno del servidor</td><td>"Ha ocurrido un error interno."</td></tr>
+        <tr><td>503</td><td>La pasarela Redsys no está disponible</td><td>"La pasarela de pago no está disponible ahora mismo."</td></tr>
     </table>
 
-    <!-- PIE -->
-    <div style="margin-top:60px;padding-top:20px;border-top:2px solid #e5e7eb;text-align:center;color:#9ca3af;font-size:11px;">
-        <p><strong style="color:#00A86B;">PíoBite</strong> — Diseño API REST — Cafetería Instituto Pío Baroja</p>
-        <p>Documento de diseño técnico · Abril 2025</p>
-    </div>
+    <h3>Qué hace el frontend con cada error</h3>
+
+    <table>
+        <tr><th>Código</th><th>Qué hace el frontend</th></tr>
+        <tr><td>400</td><td>Muestra los mensajes de error debajo de los campos del formulario que estén mal.</td></tr>
+        <tr><td>401 (token expirado)</td><td>Intenta renovar el token automáticamente con POST /auth/refresh/. Si falla, manda al usuario al login.</td></tr>
+        <tr><td>401 (otros)</td><td>Redirige al usuario a la pantalla de login.</td></tr>
+        <tr><td>403</td><td>Muestra "No tienes permisos" y redirige a la página principal.</td></tr>
+        <tr><td>404</td><td>Muestra pantalla de "No encontrado".</td></tr>
+        <tr><td>422 (pago)</td><td>Muestra mensaje de error del pago y da la opción de intentarlo otra vez.</td></tr>
+        <tr><td>429</td><td>Muestra aviso de que espere un poco antes de volver a intentarlo.</td></tr>
+        <tr><td>500 / 503</td><td>Muestra pantalla de error genérica con botón de reintentar.</td></tr>
+    </table>
+
+    <br>
+    <hr>
+    <p class="centro" style="color:#888;font-size:11px;margin-top:20px;">Cafetería Instituto Pío Baroja — Diseño API REST — Abril 2025</p>
 
 </body>
 </html>
