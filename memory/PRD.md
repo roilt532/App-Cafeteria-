@@ -1,71 +1,55 @@
 # PíoBite - Cafetería Instituto Pío Baroja - PRD
 
 ## Problem Statement
-Aplicación móvil de pedidos para la cafetería del Instituto Pío Baroja. Fase 1: Prototipo navegable con todas las pantallas y flujos de usuario.
+Aplicación móvil de pedidos para la cafetería del Instituto Pío Baroja con API REST completa.
 
 ## Architecture
 - **Frontend**: React 18 + Tailwind CSS + React Router v6 + react-qr-code
-- **Backend**: FastAPI (Python) - API minimal con datos mock
-- **Database**: MongoDB (configurado, no usado en prototipo)
-- **Responsive**: Mobile-first, adaptado a tablet y desktop
+- **Backend**: FastAPI (Python) + MongoDB (motor) + JWT Auth (bcrypt + PyJWT)
+- **Database**: MongoDB con colecciones: users, products, categories, orders, timeslots
+- **Responsive**: Mobile-first, tablet y desktop
 
-## User Personas
-1. **Alumno/Cliente**: Estudiante del instituto que pide comida
-2. **Admin (Cafetería)**: Personal del servicio que gestiona pedidos
+## What's Been Implemented
 
-## Core Requirements (Static)
-- Login/Register con selección de rol
-- Catálogo de productos con categorías y búsqueda
-- Carrito de compra con gestión de cantidades
-- Selección de franja horaria de recogida
-- Confirmación de pedido con código QR
-- Historial de pedidos
-- Favoritos
-- Perfil con toggle idioma ES/EN
-- Panel Admin con gestión de pedidos y verificación de código
-- Navegación responsiva: Bottom Nav (móvil) / Sidebar (tablet/desktop)
+### Fase 1 - Prototipo (April 15, 2025)
+- [x] 11 pantallas navegables con diseño responsive
+- [x] Catálogo de 12 productos, 6 categorías
+- [x] Sistema de traducciones ES/EN completo
 
-## What's Been Implemented (April 15, 2025)
-- [x] Pantalla de bienvenida con branding PíoBite
-- [x] Login con toggle de rol (Cliente/Admin) + botón Google
-- [x] Registro con selección visual de rol
-- [x] Catálogo con 12 productos, 6 categorías, búsqueda, favoritos
-- [x] Carrito con controles de cantidad (+/-), eliminar, total
-- [x] Selección de franja horaria (8 slots)
-- [x] Confirmación de pedido con QR code real (react-qr-code)
-- [x] Historial con 3 pedidos mock y estados
-- [x] Pantalla de favoritos
-- [x] Perfil con toggle ES/EN, info de usuario, logout
-- [x] Panel Admin con tabs de estado, verificación de código, acciones
-- [x] Bottom Nav (móvil) y Sidebar (tablet/desktop)
-- [x] Sistema completo de traducciones ES/EN
+### Fase 2 - API REST Completa (April 22, 2025)
+- [x] Backend real con MongoDB (no más datos mock)
+- [x] JWT Authentication (register, login, logout, refresh, me)
+- [x] Admin seeding automático al inicio
+- [x] CRUD completo de productos con stock
+- [x] Gestión de pedidos con transiciones de estado validadas
+- [x] Simulación de pasarela de pago Redsys
+- [x] Panel de Inventario (gestión de stock, disponibilidad)
+- [x] Panel de Estadísticas (ventas, productos top, estados)
+- [x] Gestión de errores estructurada (códigos, mensajes)
+- [x] Verificación de pedidos por código
+- [x] Franjas horarias con capacidad/ocupación
+
+### Documentación Generada
+- [x] prototipo.html - Presentación visual de todas las pantallas
+- [x] diseno-api-rest.html - Documento técnico de diseño API REST
+- [x] README.md - Documentación del proyecto
 
 ## Testing Status
 - Backend: 100% pass
-- Frontend: 95% pass (minor LOW priority issues fixed)
+- Frontend: 100% pass
 
 ## Prioritized Backlog
-### P0 (Next Phase)
-- Real authentication (JWT + Google OAuth)
-- Backend API connected to MongoDB
-- Real CRUD for products, orders, users
+### P0
+- Google OAuth real (SSO)
+- Integración Redsys real
+- Push notifications
 
 ### P1
-- Push notifications
-- Payment gateway integration
-- QR code scanning on admin side
-- Image upload for products
+- QR code scanning en admin
+- PWA support
+- Image upload para productos
 
 ### P2
-- Order tracking in real-time
-- Advanced admin analytics
-- Multi-language expansion
-- PWA support for offline mode
-
-## Products Catalog
-12 products across 6 categories:
-- Bocadillos: Jamón Serrano (3.50€), Tortilla (3.00€), Sandwich Vegetal (3.20€), Tostada Tomate (1.80€)
-- Bollería: Croissant Mixto (2.50€), Napolitana Chocolate (1.80€)
-- Ensaladas: César (4.50€)
-- Bebidas Calientes: Café con Leche (1.50€), Café Solo (1.20€)
-- Bebidas Frías: Zumo Naranja (2.00€), Agua Mineral (1.00€), Batido Chocolate (2.50€)
+- Real-time order tracking
+- Advanced analytics
+- Export reports
