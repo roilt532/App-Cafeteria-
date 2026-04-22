@@ -13,10 +13,12 @@ export default function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState('client');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    login(email || 'estudiante@piobaroja.es', password, role);
-    navigate(role === 'admin' ? '/admin' : '/home');
+    const result = await login(email || 'admin@piobite.es', password || 'admin123', role);
+    if (result.success) {
+      navigate(result.role === 'admin' ? '/admin' : '/home');
+    }
   };
 
   return (

@@ -1,16 +1,18 @@
 # Test Credentials - PíoBite
 
-## Prototype (No real auth - mock credentials)
-This is a prototype phase. Authentication is mocked - any email/password combination works.
+## Admin
+- Email: admin@piobite.es
+- Password: admin123
+- Role: admin
 
-### Client Login
-- Role: Select "Alumno / Cliente"
-- Email: any (e.g., estudiante@piobaroja.es)
-- Password: any
-- Navigates to: /home
+## Test Client
+- Email: test@piobaroja.es
+- Password: test123
+- Role: client (register first)
 
-### Admin Login
-- Role: Select "Personal Cafetería"
-- Email: any (e.g., admin@piobaroja.es)
-- Password: any
-- Navigates to: /admin
+## Auth Endpoints
+- POST /api/auth/register
+- POST /api/auth/login
+- POST /api/auth/logout
+- GET /api/auth/me
+- POST /api/auth/refresh

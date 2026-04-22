@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLang } from '../../context/LanguageContext';
 import { useApp } from '../../context/AppContext';
-import { ArrowLeft, Search, Clock, CheckCircle, ChefHat, Truck, Package, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Search, Clock, CheckCircle, ChefHat, Truck, Package, AlertCircle, BarChart3, Boxes } from 'lucide-react';
 
 const statusConfig = {
   pendiente: { color: 'bg-amber-100 text-amber-700 border-amber-200', icon: Clock, label: 'Pendiente' },
@@ -65,6 +65,15 @@ export default function AdminDashboard() {
           </button>
           <h1 className="font-heading font-black text-3xl text-white tracking-tighter">{t('admin.title')}</h1>
           <p className="font-body text-white/70 mt-1">{t('admin.subtitle')}</p>
+
+          <div className="flex gap-2 mt-4">
+            <button onClick={() => navigate('/inventory')} className="flex items-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm rounded-xl border border-white/10 text-white font-heading font-bold text-xs hover:bg-white/25 transition-all" data-testid="admin-goto-inventory">
+              <Boxes size={14} /> Inventario
+            </button>
+            <button onClick={() => navigate('/stats')} className="flex items-center gap-2 px-4 py-2.5 bg-white/15 backdrop-blur-sm rounded-xl border border-white/10 text-white font-heading font-bold text-xs hover:bg-white/25 transition-all" data-testid="admin-goto-stats">
+              <BarChart3 size={14} /> Estadísticas
+            </button>
+          </div>
 
           <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
             <p className="font-heading font-bold text-xs text-white/80 mb-2 uppercase tracking-wider">{t('admin.verifyCode')}</p>

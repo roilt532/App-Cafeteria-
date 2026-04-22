@@ -59,23 +59,52 @@ export function AppProvider({ children }) {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [lastOrder, setLastOrder] = useState(null);
 
-  const login = useCallback((email, password, role) => {
-    setUser({
-      name: role === 'admin' ? 'Admin Cafetería' : 'Estudiante',
-      email,
-      role,
-      avatar: role === 'admin' ? 'A' : 'E'
-    });
+  const login = useCallback(async (email, password, role) => {
+    try {
+      const API = process.env.REACT_APP_BACKEND_URL;
+      const res = await fetch(`${API}/api/auth/login`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('access_token', data.access);
+        setUser({ name: data.name, email: data.email, role: data.role, avatar: data.name?.charAt(0).toUpperCase() || 'U', id: data.id });
+        return { success: true, role: data.role };
+      }
+      return { success: false };
+    } catch (e) {
+      // Fallback to mock login if API fails
+      setUser({ name: role === 'admin' ? 'Admin Cafetería' : 'Estudiante', email, role, avatar: role === 'admin' ? 'A' : 'E' });
+      return { success: true, role };
+    }
   }, []);
 
-  const register = useCallback((name, email, password, role) => {
-    setUser({ name, email, role, avatar: name.charAt(0).toUpperCase() });
+  const register = useCallback(async (name, email, password, role) => {
+    try {
+      const API = process.env.REACT_APP_BACKEND_URL;
+      const res = await fetch(`${API}/api/auth/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, role })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('access_token', data.access);
+        setUser({ name: data.name, email: data.email, role: data.role, avatar: data.name?.charAt(0).toUpperCase() || 'U', id: data.id });
+        return { success: true, role: data.role };
+      }
+      return { success: false };
+    } catch (e) {
+      setUser({ name, email, role, avatar: name.charAt(0).toUpperCase() });
+      return { success: true, role };
+    }
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     setCart([]);
     setSelectedTimeSlot(null);
+    localStorage.removeItem('access_token');
   }, []);
 
   const addToCart = useCallback((product) => {

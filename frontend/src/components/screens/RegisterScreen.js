@@ -15,10 +15,12 @@ export default function RegisterScreen() {
   const [showPass, setShowPass] = useState(false);
   const [role, setRole] = useState('client');
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    register(name || 'Nuevo Usuario', email || 'nuevo@piobaroja.es', password, role);
-    navigate(role === 'admin' ? '/admin' : '/home');
+    const result = await register(name || 'Nuevo Usuario', email || 'nuevo@piobaroja.es', password || '123456', role);
+    if (result.success) {
+      navigate(result.role === 'admin' ? '/admin' : '/home');
+    }
   };
 
   return (

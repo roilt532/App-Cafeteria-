@@ -15,6 +15,9 @@ import OrderHistory from './components/screens/OrderHistory';
 import FavoritesScreen from './components/screens/FavoritesScreen';
 import ProfileScreen from './components/screens/ProfileScreen';
 import AdminDashboard from './components/screens/AdminDashboard';
+import PaymentScreen from './components/screens/PaymentScreen';
+import InventoryScreen from './components/screens/InventoryScreen';
+import StatsScreen from './components/screens/StatsScreen';
 
 const authRoutes = ['/', '/login', '/register'];
 
@@ -38,6 +41,9 @@ function AppLayout() {
           <Route path="/favorites" element={<FavoritesScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/payment" element={<PaymentScreen />} />
+          <Route path="/inventory" element={<InventoryScreen />} />
+          <Route path="/stats" element={<StatsScreen />} />
         </Routes>
       </main>
       {!isAuthPage && <BottomNav />}

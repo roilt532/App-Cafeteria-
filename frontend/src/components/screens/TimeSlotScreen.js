@@ -11,7 +11,7 @@ export default function TimeSlotScreen() {
 
   const handleConfirm = () => {
     placeOrder();
-    navigate('/order-confirmed');
+    navigate('/payment');
   };
 
   const today = new Date();
