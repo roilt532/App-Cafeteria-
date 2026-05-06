@@ -25,8 +25,7 @@ export default function LoginScreen() {
     <div className="min-h-screen bg-piobite-bg flex flex-col" data-testid="login-screen">
       <div className="h-48 md:h-56 bg-gradient-to-br from-piobite-primary to-emerald-700 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `url("https://static.prod-images.emergentagent.com/jobs/7b3c7872-4ab0-43ff-91f1-c38497cdef12/images/fe71dc810e03edcc514b7301a4f81dc9df61270386f4abcc6aaa21528a63c099.png")`,
-          backgroundSize: 'cover'
+          background: 'radial-gradient(ellipse at 60% 40%, rgba(255,193,7,0.3) 0%, transparent 60%)'
         }} />
         <div className="absolute top-0 right-0 w-40 h-40 bg-piobite-accent/20 rounded-full -translate-y-1/2 translate-x-1/4 blur-2xl" />
         <div className="relative z-10 px-6 pt-12 md:px-12">

@@ -11,8 +11,7 @@ export default function WelcomeScreen() {
     <div className="min-h-screen flex flex-col relative overflow-hidden" data-testid="welcome-screen">
       <div className="absolute inset-0 bg-gradient-to-br from-piobite-primary via-emerald-600 to-emerald-800" />
       <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: `url("https://static.prod-images.emergentagent.com/jobs/7b3c7872-4ab0-43ff-91f1-c38497cdef12/images/fe71dc810e03edcc514b7301a4f81dc9df61270386f4abcc6aaa21528a63c099.png")`,
-        backgroundSize: 'cover', backgroundPosition: 'center'
+        background: 'radial-gradient(ellipse at 30% 50%, rgba(255,193,7,0.3) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(16,185,129,0.2) 0%, transparent 50%)',
       }} />
       <div className="absolute top-0 right-0 w-72 h-72 bg-piobite-accent/20 rounded-full -translate-y-1/3 translate-x-1/3 blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-400/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl" />
